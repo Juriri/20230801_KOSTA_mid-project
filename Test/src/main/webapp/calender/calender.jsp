@@ -32,10 +32,10 @@
         
      %>
     <h1><%=currentYear %>년 <%=currentMonth %>월</h1>
-    <a href="${pageContext.request.contextPath }/calender/Cal?action=previous&currentDate=<%= currentDate %>">이전 달</a>
-  	<a href="${pageContext.request.contextPath }/calender/Cal?action=next&currentDate=<%= currentDate %>">다음 달</a>
+    <a href="${pageContext.request.contextPath }/calender/Cal?action=previous&currentDate=<%= currentDate %>">◀</a>
+  	<a href="${pageContext.request.contextPath }/calender/Cal?action=next&currentDate=<%= currentDate %>">▶</a>
   
-    <table border="1">
+    <table>
         <tr>
             <th>일</th>
             <th>월</th>

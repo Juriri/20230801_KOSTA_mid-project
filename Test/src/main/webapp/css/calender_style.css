@@ -1,5 +1,23 @@
 @charset "EUC-KR";
 
-.calButton:hover {
-    background-color: #ff4000;
+.calButton{
+	border: none;
+	background-color: white;
+	height: 140px;
+	width: 100px;
 }
+
+.calButton:hover {
+    background-color: white;
+    height: 140px;
+	width: 100px;
+	outline-color: transparent;
+	outline-style: solid;
+	box-shadow: 0 0 0 2px gray;
+	border-radius: 5px;
+}
+
+a{
+	text-decoration: none;
+}
+
