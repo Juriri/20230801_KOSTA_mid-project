@@ -1,7 +1,6 @@
 package calender;
 
 import java.io.IOException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import javax.servlet.RequestDispatcher;
@@ -39,12 +38,6 @@ public class calController extends HttpServlet {
 		int year = currentDate.getYear();
         int month = currentDate.getMonthValue();
         int date = currentDate.getDayOfMonth();
-        
-        String dayOfWeekStr = currentDate.getDayOfWeek().name();
-        
-        LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1);
-        LocalDate lastDayOfMonth = currentDate.withDayOfMonth(currentDate.lengthOfMonth()); 
-        
         
         
 		if (action.equals("previous")) {
@@ -98,7 +91,7 @@ public class calController extends HttpServlet {
 		
 		session.setAttribute("nextDate", nextDate);
 		
-		String path = "/calender/moveMonth.jsp";
+		String path = "/calender/calender.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		if (dispatcher != null) {
 			dispatcher.forward(request, response);

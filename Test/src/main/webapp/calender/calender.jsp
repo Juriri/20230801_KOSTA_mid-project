@@ -1,57 +1,71 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.time.*" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" import="java.time.*, javax.servlet.http.HttpSession" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>ÏùºÏ†ï Í¥ÄÎ¶¨</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/board_style.css">
-	<script type="text/javascript">
-	</script>
+<meta charset="EUC-KR">
+<title>¿œ¡§ ∞¸∏Æ</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/calender_style.css">
+
 </head>
 <body>
-    <% 
-        LocalDate currentDate = LocalDate.now();
-        int year = currentDate.getYear();
-        int month = currentDate.getMonthValue();
-        DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
-        String dayOfWeekStr = dayOfWeek.name();
-    
-     	// ÌòÑÏû¨ ÏõîÏùò Ï≤´ÎÇ†Í≥º ÎßàÏßÄÎßâ ÎÇ†ÏùÑ Íµ¨Ìï©ÎãàÎã§.
+    <% // «ˆ¿Á ≥Ø¬• ¡§∫∏∏¶ JavaScript ∫Øºˆø° ¿˙¿Â
+    	LocalDate currentDate = (LocalDate)session.getAttribute("nextDate");
+    	 if (currentDate == null){
+    		currentDate = LocalDate.now();
+    	} 
+    		
+        // ∆ƒ∂ÛπÃ≈Õ∑Œ ¿¸¥ﬁπﬁ¿∫ yearøÕ month ∞™¿ª ¿ÃøÎ«œø© ø¯«œ¥¬ ≥‚µµøÕ ø˘¿« ¥ﬁ∑¬¿ª √‚∑¬«’¥œ¥Ÿ.     	
+	    int currentYear = currentDate.getYear();
+	    int currentMonth = currentDate.getMonthValue();
+        
+        String dayOfWeekStr = currentDate.getDayOfWeek().name();
+       
+     	// «ˆ¿Á ø˘¿« √π≥Ø∞˙ ∏∂¡ˆ∏∑ ≥Ø¿ª ±∏«’¥œ¥Ÿ.
         LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1);
-        LocalDate lastDayOfMonth = currentDate.withDayOfMonth(currentDate.lengthOfMonth()); 
+        LocalDate lastDayOfMonth = currentDate.withDayOfMonth(currentDate.lengthOfMonth());
+     	
+        // «ÿ¥Á ø˘¿« Ω√¿€ ø‰¿œ¿ª ∞°¡Æø…¥œ¥Ÿ.
+        DayOfWeek firstDayOfWeek = firstDayOfMonth.getDayOfWeek();
+        // ƒ∂∏∞¥ı Ω√¿€ ø‰¿œ¿ª ¿œø‰¿œ(SUNDAY)∑Œ ∫Ø∞Ê
+        int startDayValue = firstDayOfWeek.getValue() % 7;
+        
      %>
-    <h1><%=year %>ÎÖÑ <%=month %>Ïõî</h1>
-    <a href="${pageContext.request.contextPath }/calender/Cal?action=previous&currentDate=<%= currentDate %>">Ïù¥Ï†Ñ Îã¨</a>
-  	<a href="${pageContext.request.contextPath }/calender/Cal?action=next&currentDate=<%= currentDate %>">Îã§Ïùå Îã¨</a>
+    <h1><%=currentYear %>≥‚ <%=currentMonth %>ø˘</h1>
+    <a href="${pageContext.request.contextPath }/calender/Cal?action=previous&currentDate=<%= currentDate %>">¿Ã¿¸ ¥ﬁ</a>
+  	<a href="${pageContext.request.contextPath }/calender/Cal?action=next&currentDate=<%= currentDate %>">¥Ÿ¿Ω ¥ﬁ</a>
+  
     <table border="1">
         <tr>
-            <th>Ïùº</th>
-            <th>Ïõî</th>
-            <th>Ìôî</th>
-            <th>Ïàò</th>
-            <th>Î™©</th>
-            <th>Í∏à</th>
-            <th>ÌÜ†</th>
+            <th>¿œ</th>
+            <th>ø˘</th>
+            <th>»≠</th>
+            <th>ºˆ</th>
+            <th>∏Ò</th>
+            <th>±›</th>
+            <th>≈‰</th>
         </tr>
         <tr>
-            <%-- Ï≤´ Ï£ºÏùò Í≥µÎ∞± ÏÖÄ ÎßåÎì§Í∏∞ --%>
-            <% for (int i = 1; i < firstDayOfMonth.getDayOfWeek().getValue(); i++) { %>
+            <%-- Ω√¿€ ø‰¿œ±Ó¡ˆ ∫Û ºø ª˝º∫ --%>
+            <% for (int i = 0; i < startDayValue; i++) { %>
                 <td></td>
             <% } %>
 
-            <%-- Ìï¥Îãπ ÏõîÏùò ÎÇ†Ïßú Ï∂úÎ†• --%>
+            <%-- «ÿ¥Á ø˘¿« ≥Ø¬• √‚∑¬ --%>
             <% for (LocalDate date = firstDayOfMonth; date.isBefore(lastDayOfMonth.plusDays(1)); date = date.plusDays(1)) { %>
-                <td><%= date.getDayOfMonth() %></td>
-
-                <%-- ÌÜ†ÏöîÏùºÏù¥Î©¥ Ï§Ñ Î∞îÍæ∏Í∏∞ --%>
+                <td>
+                	<button class="calButton" onclick="location.href='${pageContext.request.contextPath }/calender/Insert?selectedDate=<%= date %>'"><%= date.getDayOfMonth() %></button>
+                </td>
+                
+                <%-- ≈‰ø‰¿œ¿Ã∏È ¡Ÿ πŸ≤Ÿ±‚ --%>
                 <% if (date.getDayOfWeek() == DayOfWeek.SATURDAY) { %>
                     </tr><tr>
                 <% } %>
             <% } %>
 
-            <%-- ÎßàÏßÄÎßâ Ï£ºÏùò Í≥µÎ∞± ÏÖÄ ÎßåÎì§Í∏∞ --%>
-            <% for (int i = lastDayOfMonth.getDayOfWeek().getValue(); i < 7; i++) { %>
+            <%-- ∏∂¡ˆ∏∑ ¡÷¿« ≥™∏”¡ˆ ∫Û ºø ª˝º∫ --%>
+            <% int remainingEmptyCells = 7 - lastDayOfMonth.getDayOfWeek().getValue();
+            for (int i = 0; i < remainingEmptyCells; i++) { %>
                 <td></td>
             <% } %>
         </tr>
