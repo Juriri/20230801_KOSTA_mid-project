@@ -31,7 +31,7 @@
         int startDayValue = firstDayOfWeek.getValue() % 7;
         
      %>
-    <h1><%=currentYear %>년 <%=currentMonth %>월</h1>
+    <h2><%=currentYear %>년 <%=currentMonth %>월</h2>
     <a href="${pageContext.request.contextPath }/calender/Cal?action=previous&currentDate=<%= currentDate %>">◀</a>
   	<a href="${pageContext.request.contextPath }/calender/Cal?action=next&currentDate=<%= currentDate %>">▶</a>
   

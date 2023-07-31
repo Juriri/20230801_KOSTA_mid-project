@@ -3,13 +3,13 @@
 .calButton{
 	border: none;
 	background-color: white;
-	height: 140px;
+	height: 125px;
 	width: 100px;
 }
 
 .calButton:hover {
     background-color: white;
-    height: 140px;
+    height: 125px;
 	width: 100px;
 	outline-color: transparent;
 	outline-style: solid;
