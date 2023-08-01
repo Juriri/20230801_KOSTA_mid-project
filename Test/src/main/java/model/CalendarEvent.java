@@ -9,6 +9,7 @@ public class CalendarEvent {
 	private Date event_date;
 	private String event_description;
 	
+	public CalendarEvent() {}
 	public CalendarEvent(int event_id, String event_title, Date event_date, String event_description) {
 		super();
 		this.event_id = event_id;

@@ -1,12 +1,66 @@
 @charset "EUC-KR";
-
-.calButton{
-	border: none;
-	background-color: white;
-	height: 125px;
-	width: 100px;
+.container {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 30px auto;
+  max-width: 800px;
+}
+h1 {
+    margin-bottom: 20px;
+}
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
+.menu-container a {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.menu-container a:hover {
+  background-color: #e0e0e0;
+}
+
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+th {
+    background-color: #f0f0f0;
+}
+td {
+    height: 80px;
+    vertical-align: top;
+}
+.calButton {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.2s;
+}
 .calButton:hover {
     background-color: white;
     height: 125px;
@@ -17,7 +71,12 @@
 	border-radius: 5px;
 }
 
+.calButton:focus {
+    outline: none;
+}
+.today {
+    background-color: #ffcc80;
+}
 a{
 	text-decoration: none;
 }
-
