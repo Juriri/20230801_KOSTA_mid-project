@@ -234,4 +234,35 @@ public class DaoImpl implements Dao{
 		return list;
 	}
 
+	@Override
+	public void deleteEvent(int event_id) {
+		// TODO Auto-generated method stub
+		Connection conn = db.getConnection();
+		
+		String sql = "delete CalendarEvent where event_id=?";
+		PreparedStatement pstmt = null;
+		System.out.println("dao에서 삭제 들어감");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, event_id);
+			pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

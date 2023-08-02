@@ -10,4 +10,5 @@ public interface Service {
 	public List<CalendarEvent> getAll();
 	public List<CalendarEvent> getAllBymonth(int year, int month);
 	public List<CalendarEvent> getAllBydate(Date date);
+	void deleteEvent(int event_id);
 }

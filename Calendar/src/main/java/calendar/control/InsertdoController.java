@@ -44,7 +44,8 @@ public class InsertdoController extends HttpServlet {
 		event_date: 일정 날짜와 시간
 		event_description: 일정 설명*/
 		
-		String event_title = request.getParameter("event_title");
+		String event_title_dropdown = request.getParameter("event_title_dropdown");
+		String event_title = event_title_dropdown + ":: "+request.getParameter("event_title");
 		Date event_date = Date.valueOf(request.getParameter("event_date"));
 		String event_description = request.getParameter("event_description");
 		
@@ -59,10 +60,7 @@ public class InsertdoController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		session.setAttribute("nextDate", event_date);
 		
-		
-		
 		String path = request.getContextPath() + "/calendar/Insert?action=insertDone";
-		session.setAttribute("nextDate", event_date);
 		response.sendRedirect(path);
 	}
 

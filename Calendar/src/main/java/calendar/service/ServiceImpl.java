@@ -41,6 +41,13 @@ public class ServiceImpl implements Service{
 		// TODO Auto-generated method stub
 		return dao.getAllBydate(date);
 	}
+
+
+	@Override
+	public void deleteEvent(int event_id) {
+		// TODO Auto-generated method stub
+		dao.deleteEvent(event_id);
+	}
 	
 
 	

@@ -11,5 +11,6 @@ public interface Dao {
 	List<CalendarEvent> getAllBymonth(int year, int month);
 	List<CalendarEvent> getAllBydate(Date date);
 	int makeNum(List<CalendarEvent> list);
+	void deleteEvent(int event_id);
 	
 }
