@@ -241,7 +241,6 @@ public class DaoImpl implements Dao{
 		
 		String sql = "delete CalendarEvent where event_id=?";
 		PreparedStatement pstmt = null;
-		System.out.println("dao에서 삭제 들어감");
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -262,6 +261,81 @@ public class DaoImpl implements Dao{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+
+	@Override
+	public CalendarEvent getById(int event_id) {
+		// TODO Auto-generated method stub
+		CalendarEvent event = null;
+		ResultSet rs = null;
+		Connection conn = db.getConnection();
+		PreparedStatement pstmt = null;
+	
+		String sql = "SELECT * FROM CalendarEvent WHERE event_id = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, event_id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String event_title = rs.getString(2);
+				Date event_date = rs.getDate(3);
+				String event_description = rs.getString(4);
+				
+				event = new CalendarEvent(event_id, event_title, event_date, event_description);		
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return event;
+	}
+
+	@Override
+	public void updateEvent(CalendarEvent event) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		
+		
+		String sql = "update CalendarEvent set event_title=?,event_date=?,event_description=? where event_id=?";
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			conn = db.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, event.getEvent_title());
+			pstmt.setDate(2, event.getEvent_date());
+			pstmt.setString(3, event.getEvent_description());
+			pstmt.setInt(4, event.getEvent_id());
+			
+			pstmt.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 	}
 

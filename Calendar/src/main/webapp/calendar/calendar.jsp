@@ -42,8 +42,9 @@
 	            <h1><%= currentYear %>년 <%= currentMonth %>월</h1>
 	            <a href="${pageContext.request.contextPath}/calendar/Next.do?action=next&currentDate=<%= currentDate %>">▶</a>
 	        </div>
- 
+ 			
             <a href="${pageContext.request.contextPath}/calendar/Next.do?action=now">오늘 날짜</a>
+            <br><br>
             <table border="1" class="calendar-table">
                 <tr>
 			        <th class="calendar-header">일</th>
@@ -81,7 +82,7 @@
         $(document).ready(function() {
             // Send AJAX request to /calendar/List?action=title
             $.ajax({
-                url: "${pageContext.request.contextPath}/calendar/List.do?action=title&currentYear=" + <%=currentYear%> + "&currentMonth=" + <%=currentMonth%>,
+                url: "${pageContext.request.contextPath}/calendar/List.do?action=titleBymonth&currentYear=" + <%=currentYear%> + "&currentMonth=" + <%=currentMonth%>,
                 method: "GET",
                 dataType: "json",
                 success: function(events) {
@@ -91,7 +92,7 @@
 
                         // Truncate title to 5 characters if it's longer
                         if (title.length > 15) {
-                            title = title.substring(0, 5);
+                            title = title.substring(0, 15);
                         }
 
                         var day = event.event_date.split(" ")[1].replace(",", "");

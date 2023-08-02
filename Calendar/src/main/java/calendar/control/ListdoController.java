@@ -1,6 +1,7 @@
 package calendar.control;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -37,7 +38,7 @@ public class ListdoController extends HttpServlet {
 		Service service = new ServiceImpl();
 		List<CalendarEvent> events = null;
 		
-		if(action.equals("title")) {
+		if(action.equals("titleBymonth")) {
 			int currentYear = Integer.parseInt(request.getParameter("currentYear"));
 			int currentMonth = Integer.parseInt(request.getParameter("currentMonth"));
 			//현재 월을 DB의 current month와 비교하여 title을 가지고옴
@@ -47,10 +48,24 @@ public class ListdoController extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
+
+		}
+		
+		else if(action.equals("eventBydate")) {
+			
+			String currentDateStr = request.getParameter("currentDate");
+		    Date currentDate = Date.valueOf(currentDateStr); // Parse the currentDate from the request parameter
+		    
+			events = service.getAllBydate(currentDate);
+			
+			String json = new Gson().toJson(events);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
 			
 		}
 		
-		request.setAttribute("title", events);
+		
 	}
 
 	/**

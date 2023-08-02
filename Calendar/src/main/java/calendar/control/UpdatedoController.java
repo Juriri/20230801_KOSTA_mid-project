@@ -17,15 +17,15 @@ import model.CalendarEvent;
 /**
  * Servlet implementation class InsertdoController
  */
-@WebServlet("/calendar/Insert.do")
+@WebServlet("/calendar/Update.do")
 
-public class InsertdoController extends HttpServlet {
+public class UpdatedoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertdoController() {
+    public UpdatedoController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -52,23 +52,23 @@ public class InsertdoController extends HttpServlet {
 		event_date: 일정 날짜와 시간
 		event_description: 일정 설명*/
 		
+		int event_id = Integer.parseInt(request.getParameter("event_id"));
+		Service service = new ServiceImpl();
+		CalendarEvent event = service.getById(event_id);
+		
+		
 		String event_title_dropdown = request.getParameter("event_title_dropdown");
 		String event_title = event_title_dropdown + "::"+request.getParameter("event_title");
 		Date event_date = Date.valueOf(request.getParameter("event_date"));
 		String event_description = request.getParameter("event_description");
+
+		event.setEvent_title(event_title);
+		event.setEvent_date(event_date);
+		event.setEvent_description(event_description);
 		
-		CalendarEvent cal = new CalendarEvent();
-		cal.setEvent_title(event_title);
-		cal.setEvent_date(event_date);
-		cal.setEvent_description(event_description);
-		
-		Service service = new ServiceImpl();
-		service.insert(cal);
-		
-		HttpSession session = request.getSession(true);
-		session.setAttribute("currentDate", event_date);
-		
-		String path = request.getContextPath() + "/calendar/Insert?action=insertDone";
+		service.updateEvent(event);
+
+		String path = request.getContextPath() + "/calendar/Update?action=updateDone&event_id="+event_id;
 		response.sendRedirect(path);
 	}
 

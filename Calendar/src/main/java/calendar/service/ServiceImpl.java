@@ -48,6 +48,20 @@ public class ServiceImpl implements Service{
 		// TODO Auto-generated method stub
 		dao.deleteEvent(event_id);
 	}
+
+
+	@Override
+	public CalendarEvent getById(int event_id) {
+		// TODO Auto-generated method stub
+		return dao.getById(event_id);
+	}
+
+
+	@Override
+	public void updateEvent(CalendarEvent event) {
+		// TODO Auto-generated method stub
+		dao.updateEvent(event);
+	}
 	
 
 	
