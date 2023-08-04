@@ -44,6 +44,7 @@
 	        </div>
  			
             <a href="${pageContext.request.contextPath}/calendar/Next.do?action=now">오늘 날짜</a>
+            <a href="${pageContext.request.contextPath}/checklist/checklist.jsp">일정 확인</a>
             <br><br>
             <table border="1" class="calendar-table">
                 <tr>

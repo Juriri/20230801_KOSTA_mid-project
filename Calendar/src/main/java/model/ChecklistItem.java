@@ -7,6 +7,9 @@ public class ChecklistItem {
 	private String item_description;
 	private int event_id;
 	
+	
+	public ChecklistItem() {
+	}
 	public ChecklistItem(int item_id, String item_title, String item_description, int event_id) {
 		super();
 		this.item_id = item_id;
