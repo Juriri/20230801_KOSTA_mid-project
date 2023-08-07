@@ -12,14 +12,7 @@
 <title>일정 확인</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/checkinput.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/checklist.css">
-<script>
-	function selectCheck(){
-		var m = document.calendar.month;
-		if(m.value == ""){
-			alert("해당 월을 선택하세요.");
-		}
-	}
-</script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/insert.css">
 </head>
 <body>
 <%
@@ -31,30 +24,101 @@
 
 	int currentYear = currentDate.getYear() + 1900;
 	int currentMonth = currentDate.getMonth() + 1;
+	
 %>
 	<div id="wrapper">
-	<h2><%= currentYear %>년 <%= currentMonth %>월 일정 목록</h2>
+	<h2 id="currentMonthText"><%= currentYear %>년 <%= currentMonth %>월 일정 목록</h2>
 	<a href="${pageContext.request.contextPath}/calendar/Cal">달력보기</a>
-		<form >
-			<select name="month" onchange="selectCheck()">
+	<form>
+			<select name="month" id="selectMonth">
 				<option value="">---</option>
-				<option value="1">1월</option>
-				<option value="2">2월</option>
-				<option value="3">3월</option>
-				<option value="4">4월</option>
-				<option value="5">5월</option>
-				<option value="6">6월</option>
-				<option value="7">7월</option>
-				<option value="8">8월</option>
-				<option value="9">9월</option>
+				<option value="01">1월</option>
+				<option value="02">2월</option>
+				<option value="03">3월</option>
+				<option value="04">4월</option>
+				<option value="05">5월</option>
+				<option value="06">6월</option>
+				<option value="07">7월</option>
+				<option value="08">8월</option>
+				<option value="09">9월</option>
 				<option value="10">10월</option>
 				<option value="11">11월</option>
 				<option value="12">12월</option>
 			</select>
-			<button type="button" id="search" class="sBtn">검색</button>
-		</form>
-		<div id="itemList"></div>
+			<button id="search" type="button">검색</button>
+	</form>
 	</div>
+	
+	<div id="eventListContainer">
+		<table>
+		    <tr>
+		        <th>Event Date</th>
+		        <th>Event Title</th>
+		        <th>Event Description</th>
+		    </tr>
+		    <tbody id="eventTableBody">
+		        <!-- This is where the event data rows will be populated -->
+		    </tbody>
+		</table>
+	</div>
+	
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    //버튼이 눌리면 current month 변경
+    function selectCheck(selectedMonth) {
+        var currentYear = <%=currentYear%>;
+
+        if (selectedMonth === "") {
+            alert("해당 월을 선택하세요.");
+        } else if (selectedMonth !== "") {
+
+            var currentMonth = selectedMonth;
+            var h2Element = $("#currentMonthText");
+            h2Element.text(currentYear + "년 " + currentMonth + "월 일정 목록");
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/calendar/List.do?action=titleBymonth&currentYear=" + currentYear + "&currentMonth=" + currentMonth,
+                method: "GET",
+                dataType: "json",
+                success: function(events) {
+                    var eventTableBody = $("#eventTableBody");
+                    eventTableBody.empty(); // Clear the table body before displaying the events
+
+                    for (var i = 0; i < events.length; i++) {
+                    	var event = events[i];
+                        var row = $("<tr></tr>");
+
+                        var dateCell = $("<td></td>").text(event.event_date);
+                        row.append(dateCell);
+
+                        var titleCell = $("<td></td>");
+                        var titleLink = $("<a></a>").text(event.event_title);
+                        titleLink.attr("href", "${pageContext.request.contextPath}/calendar/Update?event_id=" + event.event_id);
+                        titleCell.append(titleLink);
+                        row.append(titleCell);
+
+                        var descriptionCell = $("<td></td>").text(event.event_description);
+                        row.append(descriptionCell);
+
+                        eventTableBody.append(row);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("Error fetching data: " + error);
+                }
+            });
+        }
+    }
+
+    // 문서 로드가 완료되면 실행
+    $(document).ready(function() {
+        // 검색 버튼 클릭 시 selectCheck 함수 호출
+        $("#search").on("click", function() {
+            var selectedMonth = $("#selectMonth").val();
+            selectCheck(selectedMonth);
+        });
+    });
+</script>
 	
 </body>
 </html>
