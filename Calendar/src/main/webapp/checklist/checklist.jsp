@@ -45,7 +45,7 @@
 				<option value="11">11월</option>
 				<option value="12">12월</option>
 			</select>
-			<button id="search" type="button">검색</button>
+			<button id="search" type="button" class="sBtn">검색</button>
 	</form>
 	</div>
 	
